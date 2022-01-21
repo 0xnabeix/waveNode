@@ -1972,10 +1972,18 @@ contract NODERewardManagement {
         nodeOwners.remove(nodeOwners.getKeyAtIndex(index));
     }
 
+
+    /**
+     * @dev not implemented
+     */
     function _addReward(address account, uint256 amount) external {
         //add last reward node ?
     }
 
+    
+    /**
+      *@dev Get the node with specifi create time
+      */
     function _getNodeWithCreatime(
         NodeEntity[] storage nodes,
         uint256 _creationTime
@@ -1986,7 +1994,7 @@ contract NODERewardManagement {
             "CASHOUT ERROR: You don't have nodes to cash-out"
         );
         bool found = false;
-        int256 index = binary_search(nodes, 0, numberOfNodes, _creationTime);
+        int256 index = binary_search(nodes, 0, numberOfNodes, _creationTime);   //get the index of the node with the specific create time
         uint256 validIndex;
         if (index >= 0) {
             found = true;
@@ -1996,11 +2004,16 @@ contract NODERewardManagement {
         return nodes[validIndex];
     }
 
+
+    /**
+      * @dev Recursive function to search a node having the input creation time
+      * return the index of the node if found otherwise -1
+      */
     function binary_search(
         NodeEntity[] memory arr,
-        uint256 low,
-        uint256 high,
-        uint256 x
+        uint256 low,            //start number
+        uint256 high,           //end number
+        uint256 x               //creation time to search
     ) private view returns (int256) {
         if (high >= low) {
             uint256 mid = (high + low).div(2);
