@@ -1758,7 +1758,6 @@ contract PaymentSplitter is Context {
         /**
         * @dev The amount of payment tha users should be received.
         */
-
         uint256 payment = _pendingPayment(
             account,
             totalReceived,
@@ -1943,13 +1942,16 @@ contract NODERewardManagement {
                 rewardAvailable: rewardPerNode
             })
         );
-        nodeOwners.set(account, _nodesOfUser[account].length);
+        nodeOwners.set(account, _nodesOfUser[account].length);  //updates the number of nodes about the users.
         totalNodesCreated++;
         if (autoDistri && !distribution) {
             distributeRewards(gasForDistribution, rewardPerNode);
         }
     }
 
+    /**
+      * @dev Check the name is already exist on the given account
+      */
     function isNameAvailable(address account, string memory nodeName)
         private
         view
@@ -1964,6 +1966,7 @@ contract NODERewardManagement {
         return true;
     }
 
+    // Delete users node having the specific index
     function _burn(uint256 index) internal {
         require(index < nodeOwners.size());
         nodeOwners.remove(nodeOwners.getKeyAtIndex(index));
